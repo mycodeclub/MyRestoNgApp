@@ -33,10 +33,6 @@ export class MenuService {
       id: 4,
     },
   ];
-  getToDosApi() {
-    const url = 'https://jsonplaceholder.typicode.com/todos';
-    return this.http.get<Array<MenuItemType>>(url);
-  }
   getMenuItemsFromApi() {
     const url = 'http://restro.bitprosofttech.com/api/FoodItems';
     return this.http.get<Array<MenuItem>>(url);

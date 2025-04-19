@@ -3,6 +3,7 @@ import { MenuService } from '../../services/menu.service';
 import { MenuItemType } from '../../model/menu.item.type';
 import { MenuItems } from '../../model/menuItems';
 import { MenuItem } from '../../model/menuItems';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -16,11 +17,16 @@ export class MenuComponent implements OnInit {
   _menuItems = signal<Array<MenuItem>>([]);
 
   ngOnInit(): void {
-    this._menuService.getMenuItemsFromApi().subscribe((data) => {
-      this._menuItems.set(data);
-      console.log(this._menuItems());
-    });
-    //    this._menuItems.set(this._menuService.menuItems);
-    //   console.log(this._menuItems());
+    this._menuService
+      .getMenuItemsFromApi()
+      .pipe(
+        catchError((err) => {
+          console.error('Error fetching menu items:', err);
+          throw err;
+        })
+      )
+      .subscribe((data) => {
+        this._menuItems.set(data);
+      });
   }
 }
