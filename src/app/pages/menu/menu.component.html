@@ -2,6 +2,10 @@
   <h1>Welcome to Our Restaurant</h1>
   <p>Explore our delicious menu and add items to your cart!</p>
 
+  @for(item of _menuItems(); track item.id) {
+  <p>{{ item.title }}</p>
+  }
+
   <div class="row">
     <div class="col-md-10 text-center">
       <div class="row">
