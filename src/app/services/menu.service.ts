@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MenuItemType } from '../model/menu.item.type';
-
+import { HttpClient } from '@angular/common/http';
+import { MenuItem } from '../model/menuItems';
 @Injectable({
   providedIn: 'root',
 })
 export class MenuService {
+  http = inject(HttpClient);
   menuItems: Array<MenuItemType> = [
     {
       title: 'Item 1',
@@ -31,5 +33,13 @@ export class MenuService {
       id: 4,
     },
   ];
+  getToDosApi() {
+    const url = 'https://jsonplaceholder.typicode.com/todos';
+    return this.http.get<Array<MenuItemType>>(url);
+  }
+  getMenuItemsFromApi() {
+    const url = 'http://restro.bitprosofttech.com/api/FoodItems';
+    return this.http.get<Array<MenuItem>>(url);
+  }
   constructor() {}
 }

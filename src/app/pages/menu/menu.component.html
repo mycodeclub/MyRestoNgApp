@@ -2,70 +2,65 @@
   <h1>Welcome to Our Restaurant</h1>
   <p>Explore our delicious menu and add items to your cart!</p>
 
-  @for(item of _menuItems(); track item.id) {
-  <p>{{ item.title }}</p>
-  }
-
   <div class="row">
     <div class="col-md-10 text-center">
       <div class="row">
-        <template x-for="item in menu" :key="item.id">
-          <div class="col-md-4 mb-4">
-            <div class="card menu-item">
-              <img :src="item.foodItemImgUrl" alt="Product Image" />
-              <div class="card-body text-center">
-                <h5 class="card-title" x-text="item.name"></h5>
-                <h6
-                  class="card-title scrollable-div"
-                  x-text="item.description"
-                ></h6>
-                <div>
-                  <div
-                    class="btn-group btn-group-toggle d-flex justify-content-center mb-3"
-                    data-toggle="buttons"
+        @for(item of _menuItems(); track item.id) {
+
+        <div class="col-md-4 mb-4">
+          <div class="card menu-item">
+            <img alt="Product Image" />
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <h6 class="card-title scrollable-div">item.description</h6>
+              <div>
+                <div
+                  class="btn-group btn-group-toggle d-flex justify-content-center mb-3"
+                  data-toggle="buttons"
+                >
+                  <template
+                    x-for="pricingOption in item.pricing"
+                    :key="pricingOption.id"
                   >
-                    <template
-                      x-for="pricingOption in item.pricing"
-                      :key="pricingOption.id"
+                    <label
+                      class="btn btn-secondary"
+                      :class="{'active': selectedPricing[item.id] === pricingOption}"
                     >
-                      <label
-                        class="btn btn-secondary"
-                        :class="{'active': selectedPricing[item.id] === pricingOption}"
-                      >
-                        <input
-                          type="radio"
-                          :name="`pricing-${item.id}`"
-                          :value="pricingOption"
-                          x-model="selectedPricing[item.id]"
-                          autocomplete="off"
-                        />
-                        <span x-text="pricingOption.quantityDesciption"></span>
-                      </label>
-                    </template>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <button
-                      class="btn btn-sm btn-danger me-2"
-                      x-on:click="decreaseQuantity(item, selectedPricing[item.id])"
-                    >
-                      -
-                    </button>
-                    <span
-                      class="mx-2"
-                      x-text="getItemQuantity(item, selectedPricing[item.id])"
-                    ></span>
-                    <button
-                      class="btn btn-sm btn-success ms-2"
-                      x-on:click="addToCart(item, selectedPricing[item.id])"
-                    >
-                      +
-                    </button>
-                  </div>
+                      <input
+                        type="radio"
+                        :name="`pricing-${item.id}`"
+                        :value="pricingOption"
+                        x-model="selectedPricing[item.id]"
+                        autocomplete="off"
+                      />
+                      <span x-text="pricingOption.quantityDesciption"></span>
+                    </label>
+                  </template>
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button
+                    class="btn btn-sm btn-danger me-2"
+                    x-on:click="decreaseQuantity(item, selectedPricing[item.id])"
+                  >
+                    -
+                  </button>
+                  <span
+                    class="mx-2"
+                    x-text="getItemQuantity(item, selectedPricing[item.id])"
+                  ></span>
+                  <button
+                    class="btn btn-sm btn-success ms-2"
+                    x-on:click="addToCart(item, selectedPricing[item.id])"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </template>
+        </div>
+
+        }
       </div>
       <div class="col-md-2 text-center">
         <!-- Floating Cart Summary -->
