@@ -18,11 +18,3 @@
   border-radius: 1rem; /* Use rem for scalable curved edges */
   background-color: #f8f9fa; /* Optional: Add a background color for better visibility */
 }
-
-.scrollable-div {
-  height: 3em; /* Height for 2 rows (e.g., 1 row = 1.5em, 2 rows = 3em) */
-  overflow-y: auto; /* Enables vertical scrollbar */
-  padding: 1em;
-  /* border: 1px solid #d13b3b; */
-  box-sizing: border-box;
-}
