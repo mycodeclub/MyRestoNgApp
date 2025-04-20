@@ -1,0 +1,131 @@
+<div class="container py-5">
+  <div class="row">
+    <!-- Cart Summary -->
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4>Order Summary</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(item of cart.selectedItems; track item.id) {
+                  <tr>
+                    <td>{{ item.ItemName }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.unitPrice }}</td>
+                    <td>${{ item.quantity * item.unitPrice }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Discount Section -->
+          <div class="mt-4">
+            <div class="input-group">
+              <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Enter discount code" 
+                [(ngModel)]="discountCode"
+                [disabled]="discountApplied"
+              >
+              @if (!discountApplied) {
+                <button class="btn btn-outline-primary" (click)="applyDiscount()">Apply</button>
+              } @else {
+                <button class="btn btn-outline-danger" (click)="removeDiscount()">Remove</button>
+              }
+            </div>
+            @if (discountApplied) {
+              <div class="alert alert-success mt-2">
+                Discount of ${{ discountAmount }} applied successfully!
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Options -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h4>Payment Options</h4>
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+            @for(method of paymentMethods; track method.id) {
+              <label class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <i class="bi {{ method.icon }} me-2"></i>
+                  {{ method.name }}
+                </div>
+                <input 
+                  type="radio" 
+                  name="paymentMethod" 
+                  [value]="method.id"
+                  [(ngModel)]="selectedPaymentMethod"
+                >
+              </label>
+            }
+          </div>
+
+          <!-- Payment Details -->
+          <div class="mt-4">
+            @if (selectedPaymentMethod === 'upi') {
+              <div class="mb-3">
+                <label class="form-label">UPI ID</label>
+                <input type="text" class="form-control" placeholder="Enter UPI ID">
+              </div>
+            }
+            @if (selectedPaymentMethod === 'qr') {
+              <div class="text-center">
+                <img src="assets/qr-code.png" alt="QR Code" class="img-fluid mb-3" style="max-width: 200px;">
+                <p class="text-muted">Scan this QR code to make payment</p>
+              </div>
+            }
+            @if (selectedPaymentMethod === 'cod') {
+              <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                Pay with cash when your order is delivered
+              </div>
+            }
+          </div>
+
+          <!-- Order Total -->
+          <div class="mt-4">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Subtotal:</span>
+              <span>${{ cart.totalPrice }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Discount:</span>
+              <span class="text-danger">-${{ cart.discount }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <strong>Total:</strong>
+              <strong>${{ cart.totalPriceAfterDiscount }}</strong>
+            </div>
+            <button 
+              class="btn btn-primary w-100" 
+              (click)="placeOrder()"
+              [disabled]="cart.selectedItems.length === 0"
+            >
+              Place Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

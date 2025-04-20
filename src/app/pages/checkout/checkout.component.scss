@@ -1,0 +1,42 @@
+.card {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: none;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.list-group-item {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+
+  input[type="radio"] {
+    cursor: pointer;
+  }
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+}
+
+// Payment method icons
+.bi {
+  font-size: 1.2rem;
+}
+
+// QR code container
+.text-center {
+  img {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: white;
+  }
+} 
