@@ -37,5 +37,11 @@ export class MenuService {
     const url = 'http://restro.bitprosofttech.com/api/FoodItems';
     return this.http.get<Array<MenuItem>>(url);
   }
+
+  addMenuItem(formData: FormData) {
+    const url = 'http://restro.bitprosofttech.com/api/FoodItems';
+    return this.http.post<MenuItem>(url, formData);
+  }
+
   constructor() {}
 }

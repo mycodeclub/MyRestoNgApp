@@ -1,0 +1,45 @@
+.card {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: none;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+// Image preview
+.img-thumbnail {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+// Pricing options
+.pricing-card {
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+}
+
+// Form validation
+.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+// Submit button
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+} 

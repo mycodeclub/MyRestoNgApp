@@ -1,0 +1,159 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4>Add New Menu Item</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="menuItemForm" (ngSubmit)="onSubmit()">
+            <!-- Basic Information -->
+            <div class="mb-3">
+              <label class="form-label">Item Name</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="name"
+                [class.is-invalid]="menuItemForm.get('name')?.invalid && menuItemForm.get('name')?.touched"
+              >
+              <div class="invalid-feedback">Item name is required</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea 
+                class="form-control" 
+                formControlName="description"
+                rows="3"
+                [class.is-invalid]="menuItemForm.get('description')?.invalid && menuItemForm.get('description')?.touched"
+              ></textarea>
+              <div class="invalid-feedback">Description is required</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <select 
+                class="form-select" 
+                formControlName="categoryId"
+                [class.is-invalid]="menuItemForm.get('categoryId')?.invalid && menuItemForm.get('categoryId')?.touched"
+              >
+                <option value="">Select Category</option>
+                <option value="1">Appetizers</option>
+                <option value="2">Main Course</option>
+                <option value="3">Desserts</option>
+                <option value="4">Beverages</option>
+              </select>
+              <div class="invalid-feedback">Category is required</div>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-3">
+              <label class="form-label">Item Image</label>
+              <input 
+                type="file" 
+                class="form-control" 
+                accept="image/*"
+                (change)="onFileSelected($event)"
+              >
+              @if (imagePreview) {
+                <img [src]="imagePreview" class="img-thumbnail mt-2" style="max-height: 200px;">
+              }
+            </div>
+
+            <!-- Additional Information -->
+            <div class="mb-3">
+              <label class="form-label">Ingredients</label>
+              <textarea 
+                class="form-control" 
+                formControlName="ingredients"
+                rows="2"
+                placeholder="Enter ingredients separated by commas"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Recipe</label>
+              <textarea 
+                class="form-control" 
+                formControlName="recipe"
+                rows="3"
+                placeholder="Enter recipe instructions"
+              ></textarea>
+            </div>
+
+            <div class="mb-3 form-check">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                formControlName="isAvailable"
+              >
+              <label class="form-check-label">Item is available</label>
+            </div>
+
+            <!-- Pricing Options -->
+            <div class="mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Pricing Options</h5>
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="addPricing()">
+                  Add Pricing Option
+                </button>
+              </div>
+
+              <div formArrayName="pricing">
+                @for(pricing of pricingArray.controls; track pricing; let i = $index) {
+                  <div [formGroupName]="i" class="card mb-2">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="form-label">Quantity Description</label>
+                          <input 
+                            type="text" 
+                            class="form-control" 
+                            formControlName="quantityDescription"
+                            placeholder="e.g., Regular, Large, Family Pack"
+                          >
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label">Price</label>
+                          <input 
+                            type="number" 
+                            class="form-control" 
+                            formControlName="cost"
+                            min="0"
+                            step="0.01"
+                          >
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                          @if (pricingArray.length > 1) {
+                            <button 
+                              type="button" 
+                              class="btn btn-outline-danger btn-sm w-100"
+                              (click)="removePricing(i)"
+                            >
+                              Remove
+                            </button>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="!menuItemForm.valid || !selectedFile"
+              >
+                Add Menu Item
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
